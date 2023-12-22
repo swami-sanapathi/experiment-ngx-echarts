@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
+import { ChartCmp } from './charts/chart.component';
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [NgxEchartsDirective],
-    template: ` <div echarts [options]="chartOption" class="demo-chart"></div> `,
-    providers: [provideEcharts()],
+    template: ` <app-chart /> `,
     styles: `
     .demo-chart {
-        height: 400px;
+        height: 600px;
     }
-`
+`,
+    imports: [ChartCmp]
 })
 export class AppComponent {
     title = 'charts';
