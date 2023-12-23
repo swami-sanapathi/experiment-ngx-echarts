@@ -9,6 +9,7 @@ import { BtnCmp } from './btn.component';
     template: `
         <app-btn (chart)="changeChart($event)" />
         <br />
+
         <div echarts [options]="chartOption" class="demo-chart"></div>
     `,
     styles: [
@@ -20,13 +21,19 @@ import { BtnCmp } from './btn.component';
             }
         `
     ],
+    host: {
+        class: 'btn-cmp'
+    },
     imports: [NgxEchartsDirective, BtnCmp],
     providers: [provideEcharts()]
 })
 export class ChartCmp {
     chartOption!: EChartsOption;
+    constructor() {
+        this.changeChart();
+    }
     // change chart options accordingly when new chart is selected
-    changeChart(chart: string) {
+    changeChart(chart: string = 'line') {
         switch (chart) {
             case 'line':
                 this.chartOption = {

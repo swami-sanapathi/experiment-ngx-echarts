@@ -9,17 +9,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
             <button (click)="changeChart(chart)">{{ chart | titlecase }}</button>
         }
     `,
-    imports: [TitleCasePipe],
-    styles: `
-    button {
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        background: #fff;
-        padding: 4px 8px;
-        margin: 0 4px;
-        cursor: pointer;
-    }
-    `
+    imports: [TitleCasePipe]
 })
 export class BtnCmp {
     charts: string[];

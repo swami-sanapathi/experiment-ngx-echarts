@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+button {
+    background-color: #F0F0F0     ; /* Green background */
+    border: none; /* No border */
+    color: black; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Mouse pointer on hover */
+    transition-duration: 0.4s; /* Transition effect */
+}
+button:hover {
+    background-color: #D0D0D0    ; /* Darker blue background on hover */
+}
