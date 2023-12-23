@@ -14,7 +14,9 @@ import { BtnCmp } from './btn.component';
     styles: [
         `
             .demo-chart {
-                height: 600px;
+                height: 800px;
+                width: 50%;
+                margin: 0 auto;
             }
         `
     ],
@@ -37,7 +39,7 @@ export class ChartCmp {
                     },
                     series: [
                         {
-                            data: [820, 932, 901, 934, 1290, 1330, 1320],
+                            data: [150, 230, 224, 218, 135, 147, 260],
                             type: 'line'
                         }
                     ]
