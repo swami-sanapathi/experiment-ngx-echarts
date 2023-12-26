@@ -17,16 +17,10 @@ export const SUB_CHARTS_MAP = {
         'Line Gradient',
         'Distribution of Electricity'
     ],
-    bar: [
-        'Basic Bar',
-        'Bar with Background',
-        'Set Style of Single Bar.',
-        'Waterfall Chart',
-        'Bar Chart with Negative Value'
-    ],
+    bar: ['Basic Bar', 'Set Style of Single Bar.', 'Waterfall Chart', 'Bar Chart with Negative Value'],
     pie: ['Referer of a Website', 'Doughnut Chart with Rounded Corner', 'Doughnut Chart', 'Half Doughnut Chart'],
 
-    funnel: ['Funnel Compare', 'Customized Funnel', 'Multiple Funnels'],
+    funnel: ['Funnel', 'Funnel Compare', 'Customized Funnel', 'Multiple Funnels'],
     dataset: [
         'Dataset Basics',
         'Dataset Link',
@@ -51,6 +45,7 @@ export function getSubChartOptions(sub_chart: string) {
     switch (sub_chart) {
         case 'Basic Line':
             options = {
+                darkMode: 'auto',
                 xAxis: {
                     type: 'category',
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -356,29 +351,6 @@ export function getSubChartOptions(sub_chart: string) {
                 ]
             };
             break;
-        case 'Bar with Background':
-            options = {
-                xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    axisLabel: {
-                        formatter: '{value} °C'
-                    }
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [
-                    {
-                        data: [11, 11, 15, 13, 12, 13, 10],
-                        type: 'bar',
-                        backgroundStyle: {
-                            color: 'rgba(220, 220, 220, 0.8)'
-                        }
-                    }
-                ]
-            };
-            break;
         case 'Set Style of Single Bar.':
             options = {
                 xAxis: {
@@ -463,24 +435,66 @@ export function getSubChartOptions(sub_chart: string) {
             };
             break;
         case 'Bar Chart with Negative Value':
+            const labelRight = {
+                position: 'right'
+            } as const;
+
             options = {
+                title: {
+                    text: 'Bar Chart with Negative Value'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    top: 80,
+                    bottom: 30
+                },
                 xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    axisLabel: {
-                        formatter: '{value}'
+                    type: 'value',
+                    position: 'top',
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed'
+                        }
                     }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'category',
+                    axisLine: { show: false },
+                    axisLabel: { show: false },
+                    axisTick: { show: false },
+                    splitLine: { show: false },
+                    data: ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one']
                 },
                 series: [
                     {
-                        data: [120, -132, 101, 134, 90, 230, 210],
-                        type: 'bar'
+                        name: 'Cost',
+                        type: 'bar',
+                        stack: 'Total',
+                        label: {
+                            show: true,
+                            formatter: '{b}'
+                        },
+                        data: [
+                            { value: -0.07, label: labelRight },
+                            { value: -0.09, label: labelRight },
+                            0.2,
+                            0.44,
+                            { value: -0.23, label: labelRight },
+                            0.08,
+                            { value: -0.17, label: labelRight },
+                            0.47,
+                            { value: -0.36, label: labelRight },
+                            0.18
+                        ]
                     }
                 ]
             };
+
             break;
         case 'Referer of a Website':
             options = {
@@ -646,12 +660,10 @@ export function getSubChartOptions(sub_chart: string) {
                 ]
             };
             break;
-        case 'Funnel Compare':
+        case 'Funnel':
             options = {
                 title: {
-                    text: 'Funnel Compare',
-                    subtext: 'Fake Data',
-                    left: 'center'
+                    text: 'Funnel'
                 },
                 tooltip: {
                     trigger: 'item',
@@ -667,17 +679,14 @@ export function getSubChartOptions(sub_chart: string) {
                 legend: {
                     data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order']
                 },
-                calculable: true,
                 series: [
                     {
                         name: 'Funnel',
                         type: 'funnel',
                         left: '10%',
                         top: 60,
-                        //x2: 80,
                         bottom: 60,
                         width: '80%',
-                        // height: {totalHeight} - y - y2,
                         min: 0,
                         max: 100,
                         minSize: '0%',
@@ -715,12 +724,113 @@ export function getSubChartOptions(sub_chart: string) {
                 ]
             };
             break;
+        case 'Funnel Compare':
+            options = {
+                title: {
+                    text: 'Funnel Compare',
+                    subtext: 'Fake Data',
+                    left: 'left',
+                    top: 'bottom'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c}%'
+                },
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    top: 'center',
+                    feature: {
+                        dataView: { readOnly: false },
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['Prod A', 'Prod B', 'Prod C', 'Prod D', 'Prod E']
+                },
+
+                series: [
+                    {
+                        name: 'Funnel',
+                        type: 'funnel',
+                        width: '40%',
+                        height: '45%',
+                        left: '5%',
+                        top: '50%',
+                        funnelAlign: 'right',
+
+                        data: [
+                            { value: 60, name: 'Prod C' },
+                            { value: 30, name: 'Prod D' },
+                            { value: 10, name: 'Prod E' },
+                            { value: 80, name: 'Prod B' },
+                            { value: 100, name: 'Prod A' }
+                        ]
+                    },
+                    {
+                        name: 'Pyramid',
+                        type: 'funnel',
+                        width: '40%',
+                        height: '45%',
+                        left: '5%',
+                        top: '5%',
+                        sort: 'ascending',
+                        funnelAlign: 'right',
+
+                        data: [
+                            { value: 60, name: 'Prod C' },
+                            { value: 30, name: 'Prod D' },
+                            { value: 10, name: 'Prod E' },
+                            { value: 80, name: 'Prod B' },
+                            { value: 100, name: 'Prod A' }
+                        ]
+                    },
+                    {
+                        name: 'Funnel',
+                        type: 'funnel',
+                        width: '40%',
+                        height: '45%',
+                        left: '55%',
+                        top: '5%',
+                        funnelAlign: 'left',
+
+                        data: [
+                            { value: 60, name: 'Prod C' },
+                            { value: 30, name: 'Prod D' },
+                            { value: 10, name: 'Prod E' },
+                            { value: 80, name: 'Prod B' },
+                            { value: 100, name: 'Prod A' }
+                        ]
+                    },
+                    {
+                        name: 'Pyramid',
+                        type: 'funnel',
+                        width: '40%',
+                        height: '45%',
+                        left: '55%',
+                        top: '50%',
+                        sort: 'ascending',
+                        funnelAlign: 'left',
+
+                        data: [
+                            { value: 60, name: 'Prod C' },
+                            { value: 30, name: 'Prod D' },
+                            { value: 10, name: 'Prod E' },
+                            { value: 80, name: 'Prod B' },
+                            { value: 100, name: 'Prod A' }
+                        ]
+                    }
+                ]
+            };
+
+            break;
         case 'Customized Funnel':
             options = {
                 title: {
-                    text: 'Customized Funnel',
-                    subtext: 'Fake Data',
-                    left: 'center'
+                    text: 'Funnel'
                 },
                 tooltip: {
                     trigger: 'item',
@@ -736,41 +846,25 @@ export function getSubChartOptions(sub_chart: string) {
                 legend: {
                     data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order']
                 },
-                calculable: true,
                 series: [
                     {
-                        name: 'Funnel',
+                        name: 'Expected',
                         type: 'funnel',
                         left: '10%',
-                        top: 60,
-                        //x2: 80,
-                        bottom: 60,
                         width: '80%',
-                        // height: {totalHeight} - y - y2,
-                        min: 0,
-                        max: 100,
-                        minSize: '0%',
-                        maxSize: '100%',
-                        sort: 'descending',
-                        gap: 2,
                         label: {
-                            show: true,
-                            position: 'inside'
+                            formatter: '{b}Expected'
                         },
                         labelLine: {
-                            length: 10,
-                            lineStyle: {
-                                width: 1,
-                                type: 'solid'
-                            }
+                            show: false
                         },
                         itemStyle: {
-                            borderColor: '#fff',
-                            borderWidth: 1
+                            opacity: 0.7
                         },
                         emphasis: {
                             label: {
-                                fontSize: 20
+                                position: 'inside',
+                                formatter: '{b}Expected: {c}%'
                             }
                         },
                         data: [
@@ -780,6 +874,38 @@ export function getSubChartOptions(sub_chart: string) {
                             { value: 80, name: 'Click' },
                             { value: 100, name: 'Show' }
                         ]
+                    },
+                    {
+                        name: 'Actual',
+                        type: 'funnel',
+                        left: '10%',
+                        width: '80%',
+                        maxSize: '80%',
+                        label: {
+                            position: 'inside',
+                            formatter: '{c}%',
+                            color: '#fff'
+                        },
+                        itemStyle: {
+                            opacity: 0.5,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        emphasis: {
+                            label: {
+                                position: 'inside',
+                                formatter: '{b}Actual: {c}%'
+                            }
+                        },
+                        data: [
+                            { value: 30, name: 'Visit' },
+                            { value: 10, name: 'Inquiry' },
+                            { value: 5, name: 'Order' },
+                            { value: 50, name: 'Click' },
+                            { value: 80, name: 'Show' }
+                        ],
+                        // Ensure outer shape will not be over inner shape when hover.
+                        z: 100
                     }
                 ]
             };
@@ -787,15 +913,17 @@ export function getSubChartOptions(sub_chart: string) {
         case 'Multiple Funnels':
             options = {
                 title: {
-                    text: 'Multiple Funnels',
-                    subtext: 'Fake Data',
-                    left: 'center'
+                    text: 'Funnel',
+                    left: 'left',
+                    top: 'bottom'
                 },
                 tooltip: {
                     trigger: 'item',
                     formatter: '{a} <br/>{b} : {c}%'
                 },
                 toolbox: {
+                    orient: 'vertical',
+                    top: 'center',
                     feature: {
                         dataView: { readOnly: false },
                         restore: {},
@@ -803,14 +931,19 @@ export function getSubChartOptions(sub_chart: string) {
                     }
                 },
                 legend: {
+                    orient: 'vertical',
+                    left: 'left',
                     data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order']
                 },
-                calculable: true,
+
                 series: [
                     {
                         name: 'Funnel',
                         type: 'funnel',
                         width: '40%',
+                        height: '45%',
+                        left: '5%',
+                        top: '50%',
                         data: [
                             { value: 60, name: 'Visit' },
                             { value: 30, name: 'Inquiry' },
@@ -822,15 +955,47 @@ export function getSubChartOptions(sub_chart: string) {
                     {
                         name: 'Pyramid',
                         type: 'funnel',
-                        // x: '50%',
+                        width: '40%',
+                        height: '45%',
+                        left: '5%',
+                        top: '5%',
                         sort: 'ascending',
-                        itemStyle: {
-                            // normal: {
-                            //     // color: 各异,
-                            //     label: {
-                            //         position: 'left'
-                            //     }
-                            // }
+                        data: [
+                            { value: 60, name: 'Visit' },
+                            { value: 30, name: 'Inquiry' },
+                            { value: 10, name: 'Order' },
+                            { value: 80, name: 'Click' },
+                            { value: 100, name: 'Show' }
+                        ]
+                    },
+                    {
+                        name: 'Funnel',
+                        type: 'funnel',
+                        width: '40%',
+                        height: '45%',
+                        left: '55%',
+                        top: '5%',
+                        label: {
+                            position: 'left'
+                        },
+                        data: [
+                            { value: 60, name: 'Visit' },
+                            { value: 30, name: 'Inquiry' },
+                            { value: 10, name: 'Order' },
+                            { value: 80, name: 'Click' },
+                            { value: 100, name: 'Show' }
+                        ]
+                    },
+                    {
+                        name: 'Pyramid',
+                        type: 'funnel',
+                        width: '40%',
+                        height: '45%',
+                        left: '55%',
+                        top: '50%',
+                        sort: 'ascending',
+                        label: {
+                            position: 'left'
                         },
                         data: [
                             { value: 60, name: 'Visit' },
@@ -842,6 +1007,7 @@ export function getSubChartOptions(sub_chart: string) {
                     }
                 ]
             };
+
             break;
         case 'Dataset Basics':
             options = {
@@ -1115,6 +1281,7 @@ export function getSubChartOptions(sub_chart: string) {
             break;
         case 'Dataset Dimension Sort':
             options = {
+                darkMode: true,
                 dataset: {
                     dimensions: ['product', '2015', '2016', '2017'],
                     source: [
@@ -1151,5 +1318,18 @@ export function getSubChartOptions(sub_chart: string) {
             options = {};
             break;
     }
+    // set toolbox options for all charts
+    options.toolbox = {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {
+                type: 'jpeg'
+            }
+        }
+    };
+
     return options;
 }
